@@ -18,6 +18,10 @@ public class ConnectionHandler {
         galgelogik.nulstil();
     }
 
+    public boolean isGameOver() {
+        return galgelogik.erSpilletSlut();
+    }
+
     public boolean guessLetter(String letter) {
         if (letter.isEmpty()) {
             return false;

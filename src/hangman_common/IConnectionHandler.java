@@ -14,6 +14,8 @@ public interface IConnectionHandler {
 
     @WebMethod void startGame();
 
+    @WebMethod boolean isGameOver();
+
     @WebMethod boolean guessLetter(String letter);
 
     @WebMethod String getVisibleWord();
