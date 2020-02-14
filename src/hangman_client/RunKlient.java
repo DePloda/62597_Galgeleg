@@ -16,7 +16,7 @@ public class RunKlient {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Staring client ... ");
-        URL url = new URL("http://localhost:9905/hangman?wsdl");
+        URL url = new URL("http://localhost:9920/hangman?wsdl");
         QName qname = new QName("http://hangman_server/", "ConnectionHandlerService");
         Service service = Service.create(url, qname);
         IConnectionHandler server = service.getPort(IConnectionHandler.class);

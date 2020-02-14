@@ -8,7 +8,7 @@ public class RunServer {
 
         System.out.print("Starting server ... ");
         ConnectionHandler ch = new ConnectionHandler();
-        Endpoint.publish("http://[::]:9905/hangman", ch);
+        Endpoint.publish("http://[::]:9920/hangman", ch);
         System.out.println("[SERVER READY]");
 
     }
