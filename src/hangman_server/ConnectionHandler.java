@@ -1,8 +1,14 @@
 package hangman_server;
 
+import brugerautorisation.data.Bruger;
+import brugerautorisation.transport.soap.Brugeradmin;
 import hangman_common.IConnectionHandler;
 
 import javax.jws.WebService;
+import javax.xml.namespace.QName;
+import javax.xml.ws.Service;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 @SuppressWarnings("NonAsciiCharacters")
@@ -13,8 +19,27 @@ public class ConnectionHandler implements IConnectionHandler {
     private ArrayList<Integer> connections = new ArrayList<>();
 
     @Override
-    public boolean login(String username, String password) {
-        return true;
+    public boolean login(int clientID, String username, String password) {
+
+        try {
+            URL url = new URL("http://javabog.dk:9901/brugeradmin?wsdl");
+            QName qname = new QName("http://soap.transport.brugerautorisation/", "BrugeradminImplService");
+            Service service = Service.create(url, qname);
+            Brugeradmin ba = service.getPort(Brugeradmin.class);
+
+            Bruger bruger = ba.hentBruger(username, password);
+            if (bruger.brugernavn.equals(username) && bruger.adgangskode.equals(password)) {
+                System.out.println("Client with id " + clientID + " successfully logged in");
+                return true;
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return false;
+        } catch (Exception e2) {
+            System.out.println("Client with id " + clientID + " failed to login");
+            return false;
+        }
+        return false;
     }
 
     @Override

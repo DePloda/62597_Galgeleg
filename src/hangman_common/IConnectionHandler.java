@@ -8,7 +8,7 @@ import java.util.ArrayList;
 @WebService
 public interface IConnectionHandler {
 
-    @WebMethod boolean login(String username, String password);
+    @WebMethod boolean login(int clientID, String username, String password);
 
     @WebMethod void startGame();
 

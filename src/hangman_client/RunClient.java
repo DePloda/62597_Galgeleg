@@ -71,7 +71,8 @@ public class RunClient {
             System.out.print("Brugernavn: ");
             username = scanner.nextLine();
             System.out.print("Kodeord: ");
-            if (success = server.login(username, scanner.nextLine())) {
+            success = server.login(clientID, username, scanner.nextLine());
+            if (success) {
                 System.out.println("Login succesfuldt");
                 break;
             } else {
