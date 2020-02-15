@@ -30,7 +30,7 @@ public class ConnectionHandler implements IConnectionHandler {
 
             Bruger bruger = ba.hentBruger(username, password);
             if (bruger.brugernavn.equals(username) && bruger.adgangskode.equals(password)) {
-                System.out.println("Client with id " + clientID + " successfully logged in");
+                System.out.println("Client with id " + clientID + " successfully logged in as " + username);
                 connections.put(clientID, username);
                 return true;
             }
@@ -95,13 +95,6 @@ public class ConnectionHandler implements IConnectionHandler {
         } while (usedID);
         connections.put(randomID, "unknown");
         System.out.println("Client with id " + randomID + " has connected.");
-        return randomID;
-    }
-
-    @Override
-    public void informDisconnect(int id) {
-        connections.remove(id);
-        System.out.println("Client with id " + id + " disconnected.");
 
         if (connections.size() > 0) {
             System.out.println("Active connections are: ");
@@ -112,6 +105,14 @@ public class ConnectionHandler implements IConnectionHandler {
         } else {
             System.out.println("No active connections");
         }
+
+        return randomID;
+    }
+
+    @Override
+    public void informDisconnect(int id) {
+        connections.remove(id);
+        System.out.println("Client with id " + id + " disconnected.");
     }
 
 }
