@@ -38,14 +38,15 @@ public class RunClient {
         String input;
         while (true) {
             System.out.println();
-            System.out.println("#####################################");
-            System.out.println("#                                   #");
-            System.out.println("#                                   #");
-            System.out.println("#               PLAY                #");
-            System.out.println("#               EXIT                #");
-            System.out.println("#                                   #");
-            System.out.println("#                                   #");
-            System.out.println("#####################################");
+            System.out.println("#########################################");
+            System.out.println("#                                       #");
+            System.out.println("#   VELKOMMEN TIL GALGELEG TERMINALEN   #");
+            System.out.println("#                                       #");
+            System.out.println("#            SKRIV KOMMANDO             #");
+            System.out.println("#                > PLAY                 #");
+            System.out.println("#                > EXIT                 #");
+            System.out.println("#                                       #");
+            System.out.println("#########################################");
             System.out.print("> ");
             input = scanner.nextLine().toLowerCase();
             if (input.equals("exit")) {

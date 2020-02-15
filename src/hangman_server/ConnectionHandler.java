@@ -10,13 +10,14 @@ import javax.xml.ws.Service;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @SuppressWarnings("NonAsciiCharacters")
 @WebService(endpointInterface = "hangman_common.IConnectionHandler")
 public class ConnectionHandler implements IConnectionHandler {
 
     private Galgelogik galgelogik;
-    private ArrayList<Integer> connections = new ArrayList<>();
+    private HashMap<Integer, String> connections = new HashMap<>();
 
     @Override
     public boolean login(int clientID, String username, String password) {
@@ -30,6 +31,7 @@ public class ConnectionHandler implements IConnectionHandler {
             Bruger bruger = ba.hentBruger(username, password);
             if (bruger.brugernavn.equals(username) && bruger.adgangskode.equals(password)) {
                 System.out.println("Client with id " + clientID + " successfully logged in");
+                connections.put(clientID, username);
                 return true;
             }
         } catch (MalformedURLException e) {
@@ -87,31 +89,24 @@ public class ConnectionHandler implements IConnectionHandler {
         do {
             usedID = false;
             randomID = (int)(Math.random() * 10000);
-            for (int ids : connections) {
-                if (ids == randomID) {
-                    usedID = true;
-                }
+            if (connections.containsKey(randomID)) {
+                usedID = true;
             }
         } while (usedID);
-        connections.add(randomID);
+        connections.put(randomID, "unknown");
         System.out.println("Client with id " + randomID + " has connected.");
         return randomID;
     }
 
     @Override
     public void informDisconnect(int id) {
-        for (int i = 0; i < connections.size(); i++) {
-            if (connections.get(i) == id) {
-                connections.remove(i);
-                break;
-            }
-        }
+        connections.remove(id);
         System.out.println("Client with id " + id + " disconnected.");
 
         if (connections.size() > 0) {
             System.out.println("Active connections are: ");
-            for (int connection : connections) {
-                System.out.println(connection);
+            for (int clientid : connections.keySet()){
+                System.out.println("id: " + clientid + " username: " + connections.get(clientid));
             }
             System.out.println();
         } else {

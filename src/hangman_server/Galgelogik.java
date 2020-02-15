@@ -94,7 +94,7 @@ public class Galgelogik {
 
   public void gætBogstav(String bogstav) {
     if (bogstav.length() != 1) return;
-    System.out.println("Der gættes på bogstavet: " + bogstav);
+    //System.out.println("Der gættes på bogstavet: " + bogstav);
     if (brugteBogstaver.contains(bogstav)) return;
     if (spilletErVundet || spilletErTabt) return;
 
@@ -102,11 +102,11 @@ public class Galgelogik {
 
     if (ordet.contains(bogstav)) {
       sidsteBogstavVarKorrekt = true;
-      System.out.println("Bogstavet var korrekt: " + bogstav);
+      //System.out.println("Bogstavet var korrekt: " + bogstav);
     } else {
       // Vi gættede på et bogstav der ikke var i ordet.
       sidsteBogstavVarKorrekt = false;
-      System.out.println("Bogstavet var IKKE korrekt: " + bogstav);
+      //System.out.println("Bogstavet var IKKE korrekt: " + bogstav);
       antalForkerteBogstaver = antalForkerteBogstaver + 1;
       if (antalForkerteBogstaver > 6) {
         spilletErTabt = true;
