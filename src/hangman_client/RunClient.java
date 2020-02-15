@@ -20,25 +20,35 @@ public class RunClient {
     public static void main(String[] args) {
         RunClient runClient = new RunClient();
         runClient.startConnection();
+        runClient.shutdownHook();
         runClient.login();
         runClient.awaitDecision();
+    }
+
+    private void shutdownHook() {
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            public void run() {
+                server.informDisconnect(clientID);
+            }
+        }, "Shutdown-thread"));
     }
 
     private void awaitDecision() {
 
         String input;
         while (true) {
-            System.out.println(
-                    "########################################"+
-                    "#                                      #" +
-                    "#               play                   #" +
-                    "#               exit                   #" +
-                    "#                                      #" +
-                    "########################################");
-
-            input = scanner.nextLine();
+            System.out.println();
+            System.out.println("#####################################");
+            System.out.println("#                                   #");
+            System.out.println("#                                   #");
+            System.out.println("#               PLAY                #");
+            System.out.println("#               EXIT                #");
+            System.out.println("#                                   #");
+            System.out.println("#                                   #");
+            System.out.println("#####################################");
+            System.out.print("> ");
+            input = scanner.nextLine().toLowerCase();
             if (input.equals("exit")) {
-                server.informDisconnect(clientID);
                 break;
             }
             if (input.equals("play")) {
@@ -52,14 +62,24 @@ public class RunClient {
     private void login() {
         scanner = new Scanner(System.in);
 
+        System.out.println();
         System.out.println("Du bedes logge ind via dist.saluton.dk");
         String username;
-        System.out.print("Brugernavn: ");
-        username = scanner.nextLine();
-        System.out.println();
-        System.out.print("Kodeord: ");
-        server.login(username, scanner.nextLine());
-        System.out.println();
+        boolean success;
+
+        do {
+            System.out.print("Brugernavn: ");
+            username = scanner.nextLine();
+            System.out.print("Kodeord: ");
+            if (success = server.login(username, scanner.nextLine())) {
+                System.out.println("Login succesfuldt");
+                break;
+            } else {
+                System.out.println("Forkert brugernavn eller adgangskode");
+                System.out.println();
+            }
+        } while (!success);
+
     }
 
     private void gameLoop() {
@@ -87,13 +107,13 @@ public class RunClient {
 
         System.out.println("Ordet var: " + server.getWord());
         System.out.println("Spillet er slut");
-        awaitDecision();
     }
 
     private void startConnection() {
         System.out.print("Connecting client to dist.saluton.dk ... ");
         try {
-            URL url = new URL("http://s185120@dist.saluton.dk:9920/hangman?wsdl");
+            URL url = new URL("http://localhost:9920/hangman?wsdl"); // Local testing
+            //URL url = new URL("http://s185120@dist.saluton.dk:9920/hangman?wsdl"); // dist.saluton.dk testing
             QName qname = new QName("http://hangman_server/", "ConnectionHandlerService");
             Service service = Service.create(url, qname);
             server = service.getPort(IConnectionHandler.class);

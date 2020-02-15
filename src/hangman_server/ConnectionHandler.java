@@ -14,8 +14,7 @@ public class ConnectionHandler implements IConnectionHandler {
 
     @Override
     public boolean login(String username, String password) {
-        // TODO: Implement this
-        return false;
+        return true;
     }
 
     @Override
@@ -83,6 +82,16 @@ public class ConnectionHandler implements IConnectionHandler {
             }
         }
         System.out.println("Client with id " + id + " disconnected.");
+
+        if (connections.size() > 0) {
+            System.out.println("Active connections are: ");
+            for (int connection : connections) {
+                System.out.println(connection);
+            }
+            System.out.println();
+        } else {
+            System.out.println("No active connections");
+        }
     }
 
 }
