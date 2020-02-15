@@ -13,32 +13,32 @@ import java.util.Scanner;
 @SuppressWarnings("NonAsciiCharacters")
 public class RunClient {
 
+    private int clientID;
     private Scanner scanner;
     private IConnectionHandler server;
 
     public static void main(String[] args) {
         RunClient runClient = new RunClient();
         runClient.startConnection();
+        runClient.login();
         runClient.awaitDecision();
     }
 
     private void awaitDecision() {
-        if (scanner == null) {
-            scanner = new Scanner(System.in);
-        }
 
         String input;
         while (true) {
             System.out.println(
-                    "#######################################"+
-                    "##" +
-                    "##" +
-                    "##" +
-                    "##" +
-                    "#######################################");
+                    "########################################"+
+                    "#                                      #" +
+                    "#               play                   #" +
+                    "#               exit                   #" +
+                    "#                                      #" +
+                    "########################################");
 
             input = scanner.nextLine();
             if (input.equals("exit")) {
+                server.informDisconnect(clientID);
                 break;
             }
             if (input.equals("play")) {
@@ -47,6 +47,19 @@ public class RunClient {
         }
 
         scanner.close();
+    }
+
+    private void login() {
+        scanner = new Scanner(System.in);
+
+        System.out.println("Du bedes logge ind via dist.saluton.dk");
+        String username;
+        System.out.print("Brugernavn: ");
+        username = scanner.nextLine();
+        System.out.println();
+        System.out.print("Kodeord: ");
+        server.login(username, scanner.nextLine());
+        System.out.println();
     }
 
     private void gameLoop() {
@@ -75,7 +88,6 @@ public class RunClient {
         System.out.println("Ordet var: " + server.getWord());
         System.out.println("Spillet er slut");
         awaitDecision();
-
     }
 
     private void startConnection() {
@@ -85,6 +97,7 @@ public class RunClient {
             QName qname = new QName("http://hangman_server/", "ConnectionHandlerService");
             Service service = Service.create(url, qname);
             server = service.getPort(IConnectionHandler.class);
+            clientID = server.informConnect();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

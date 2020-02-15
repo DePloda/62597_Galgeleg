@@ -1,7 +1,5 @@
 package hangman_common;
 
-import hangman_server.Galgelogik;
-
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import java.util.ArrayList;
@@ -10,7 +8,7 @@ import java.util.ArrayList;
 @WebService
 public interface IConnectionHandler {
 
-    @WebMethod boolean login();
+    @WebMethod boolean login(String username, String password);
 
     @WebMethod void startGame();
 
@@ -23,5 +21,9 @@ public interface IConnectionHandler {
     @WebMethod ArrayList<String> getUsedLetters();
 
     @WebMethod String getWord ();
+
+    @WebMethod int informConnect();
+
+    @WebMethod void informDisconnect(int id);
 
 }
