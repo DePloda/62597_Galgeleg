@@ -26,10 +26,20 @@ public class RunClient {
     }
 
     private void startConnection() {
-        System.out.print("Connecting client to dist.saluton.dk ... ");
+        scanner = new Scanner(System.in);
+        URL url = null;
+
         try {
-            URL url = new URL("http://localhost:9920/hangman?wsdl"); // Local testing
-            //URL url = new URL("http://s185120@dist.saluton.dk:9920/hangman?wsdl"); // dist.saluton.dk testing
+            System.out.println("Forbindes der med lokal- eller fjernforbindelse?");
+            System.out.println("lokal/fjern");
+            String response = scanner.nextLine().toLowerCase();
+            if (response.equals("lokal")) {
+                url = new URL("http://localhost:9920/hangman?wsdl"); // Local testing
+            } else if (response.equals("fjern")) {
+                url = new URL("http://s185120@dist.saluton.dk:9920/hangman?wsdl"); // dist.saluton.dk testing
+            }
+
+            System.out.print("Forbinder ... ");
             QName qname = new QName("http://hangman_server/", "ConnectionHandlerService");
             Service service = Service.create(url, qname);
             server = service.getPort(IConnectionHandler.class);
@@ -37,7 +47,7 @@ public class RunClient {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        System.out.println("[CLIENT CONNECTED]");
+        System.out.println("SUCCES");
     }
 
     private void shutdownHook() {
@@ -58,16 +68,16 @@ public class RunClient {
             System.out.println("#   VELKOMMEN TIL GALGELEG TERMINALEN   #");
             System.out.println("#                                       #");
             System.out.println("#            SKRIV KOMMANDO             #");
-            System.out.println("#                > PLAY                 #");
-            System.out.println("#                > EXIT                 #");
+            System.out.println("#                > SPIL                 #");
+            System.out.println("#                > LUK                  #");
             System.out.println("#                                       #");
             System.out.println("#########################################");
             System.out.print("> ");
             input = scanner.nextLine().toLowerCase();
-            if (input.equals("exit")) {
+            if (input.equals("luk")) {
                 break;
             }
-            if (input.equals("play")) {
+            if (input.equals("spil")) {
                 gameLoop();
             }
         }
@@ -76,8 +86,6 @@ public class RunClient {
     }
 
     private void login() {
-        scanner = new Scanner(System.in);
-
         System.out.println();
         System.out.println("Du bedes logge ind via dist.saluton.dk");
         String username;
