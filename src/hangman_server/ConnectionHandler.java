@@ -89,7 +89,7 @@ public class ConnectionHandler implements IConnectionHandler {
         int randomID;
         do {
             usedID = false;
-            randomID = (int) (Math.random() * 10000);
+            randomID = (int) (Math.random() * 100);
             if (connections.containsKey(randomID)) {
                 usedID = true;
             }
@@ -97,16 +97,18 @@ public class ConnectionHandler implements IConnectionHandler {
         connections.put(randomID, "unknown");
         System.out.println("Client#" + randomID + " connected and received an ID.");
 
+        /*
         System.out.println();
         if (connections.size() > 0) {
             System.out.println("Active connections are:");
             for (int clientid : connections.keySet()) {
-                System.out.println("Client#: " + clientid + "\tUsername: " + connections.get(clientid));
+                System.out.println("Client#: " + clientid + "\t\tUsername: " + connections.get(clientid));
             }
             System.out.println();
         } else {
             System.out.println("No active connections.");
         }
+        */
 
         return randomID;
     }
