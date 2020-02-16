@@ -30,7 +30,7 @@ public class ConnectionHandler implements IConnectionHandler {
 
             Bruger bruger = ba.hentBruger(username, password);
             if (bruger.brugernavn.equals(username) && bruger.adgangskode.equals(password)) {
-                System.out.println("Client with id " + clientID + " successfully logged in as " + username);
+                System.out.println("Client#" + clientID + " successfully logged in as '" + username + "'.");
                 connections.put(clientID, username);
                 return true;
             }
@@ -38,16 +38,17 @@ public class ConnectionHandler implements IConnectionHandler {
             e.printStackTrace();
             return false;
         } catch (Exception e2) {
-            System.out.println("Client with id " + clientID + " failed to login");
+            System.out.println("Client#" + clientID + " failed to login.");
             return false;
         }
         return false;
     }
 
     @Override
-    public void startGame() {
+    public void startGame(int clientID) {
         galgelogik = new Galgelogik();
         galgelogik.nulstil();
+        System.out.println("Client#" + clientID + " started at game.");
     }
 
     @Override
@@ -94,25 +95,26 @@ public class ConnectionHandler implements IConnectionHandler {
             }
         } while (usedID);
         connections.put(randomID, "unknown");
-        System.out.println("Client with id " + randomID + " has connected.");
+        System.out.println("Client#" + randomID + " connected and received an ID.");
 
+        System.out.println();
         if (connections.size() > 0) {
-            System.out.println("Active connections are: ");
+            System.out.println("Active connections are:");
             for (int clientid : connections.keySet()) {
-                System.out.println("id: " + clientid + " username: " + connections.get(clientid));
+                System.out.println("Client#: " + clientid + "\tUsername: " + connections.get(clientid));
             }
             System.out.println();
         } else {
-            System.out.println("No active connections");
+            System.out.println("No active connections.");
         }
 
         return randomID;
     }
 
     @Override
-    public void informDisconnect(int id) {
-        connections.remove(id);
-        System.out.println("Client with id " + id + " disconnected.");
+    public void informDisconnect(int clientID) {
+        connections.remove(clientID);
+        System.out.println("Client#" + clientID + " disconnected.");
     }
 
 }

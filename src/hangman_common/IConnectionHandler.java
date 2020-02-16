@@ -12,7 +12,7 @@ public interface IConnectionHandler {
     boolean login(int clientID, String username, String password);
 
     @WebMethod
-    void startGame();
+    void startGame(int clientID);
 
     @WebMethod
     boolean isGameOver();
@@ -33,6 +33,6 @@ public interface IConnectionHandler {
     int informConnect();
 
     @WebMethod
-    void informDisconnect(int id);
+    void informDisconnect(int clientID);
 
 }

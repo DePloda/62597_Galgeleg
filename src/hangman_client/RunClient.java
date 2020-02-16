@@ -25,6 +25,21 @@ public class RunClient {
         runClient.awaitDecision();
     }
 
+    private void startConnection() {
+        System.out.print("Connecting client to dist.saluton.dk ... ");
+        try {
+            URL url = new URL("http://localhost:9920/hangman?wsdl"); // Local testing
+            //URL url = new URL("http://s185120@dist.saluton.dk:9920/hangman?wsdl"); // dist.saluton.dk testing
+            QName qname = new QName("http://hangman_server/", "ConnectionHandlerService");
+            Service service = Service.create(url, qname);
+            server = service.getPort(IConnectionHandler.class);
+            clientID = server.informConnect();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        System.out.println("[CLIENT CONNECTED]");
+    }
+
     private void shutdownHook() {
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             public void run() {
@@ -81,12 +96,11 @@ public class RunClient {
                 System.out.println();
             }
         } while (!success);
-
     }
 
     private void gameLoop() {
+        server.startGame(clientID);
 
-        server.startGame();
         while (!server.isGameOver()) {
             System.out.println("ORD DER SKAL GÆTTES: " + server.getVisibleWord());
             System.out.print("BRUGTE BOGSTAVER: ");
@@ -109,21 +123,6 @@ public class RunClient {
 
         System.out.println("Ordet var: " + server.getWord());
         System.out.println("Spillet er slut");
-    }
-
-    private void startConnection() {
-        System.out.print("Connecting client to dist.saluton.dk ... ");
-        try {
-            URL url = new URL("http://localhost:9920/hangman?wsdl"); // Local testing
-            //URL url = new URL("http://s185120@dist.saluton.dk:9920/hangman?wsdl"); // dist.saluton.dk testing
-            QName qname = new QName("http://hangman_server/", "ConnectionHandlerService");
-            Service service = Service.create(url, qname);
-            server = service.getPort(IConnectionHandler.class);
-            clientID = server.informConnect();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        System.out.println("[CLIENT CONNECTED]");
     }
 
 }
