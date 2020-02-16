@@ -8,6 +8,6 @@ public class RunServer {
         ConnectionHandler ch = new ConnectionHandler();
         System.out.println("Made class " + ch.toString());
         Endpoint.publish("http://[::]:9920/hangman", ch);
-        System.out.println("[SERVER READY]");
+        System.out.println("SUCCESS");
     }
 }

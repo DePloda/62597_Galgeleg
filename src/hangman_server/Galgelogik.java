@@ -9,6 +9,11 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 
+/**
+ * Class originating from this github link:
+ * https://github.com/nordfalk/Galgeleg
+ * author of this class i Jacob Nordfalk
+ */
 public class Galgelogik {
     /**
      * AHT afprøvning er muligeOrd synlig på pakkeniveau
