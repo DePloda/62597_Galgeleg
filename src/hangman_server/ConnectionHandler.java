@@ -78,7 +78,7 @@ public class ConnectionHandler implements IConnectionHandler {
     }
 
     @Override
-    public String getWord () {
+    public String getWord() {
         return galgelogik.getOrdet();
     }
 
@@ -88,7 +88,7 @@ public class ConnectionHandler implements IConnectionHandler {
         int randomID;
         do {
             usedID = false;
-            randomID = (int)(Math.random() * 10000);
+            randomID = (int) (Math.random() * 10000);
             if (connections.containsKey(randomID)) {
                 usedID = true;
             }
@@ -98,7 +98,7 @@ public class ConnectionHandler implements IConnectionHandler {
 
         if (connections.size() > 0) {
             System.out.println("Active connections are: ");
-            for (int clientid : connections.keySet()){
+            for (int clientid : connections.keySet()) {
                 System.out.println("id: " + clientid + " username: " + connections.get(clientid));
             }
             System.out.println();

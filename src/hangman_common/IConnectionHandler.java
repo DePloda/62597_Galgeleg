@@ -8,22 +8,31 @@ import java.util.ArrayList;
 @WebService
 public interface IConnectionHandler {
 
-    @WebMethod boolean login(int clientID, String username, String password);
+    @WebMethod
+    boolean login(int clientID, String username, String password);
 
-    @WebMethod void startGame();
+    @WebMethod
+    void startGame();
 
-    @WebMethod boolean isGameOver();
+    @WebMethod
+    boolean isGameOver();
 
-    @WebMethod boolean guessLetter(String letter);
+    @WebMethod
+    boolean guessLetter(String letter);
 
-    @WebMethod String getVisibleWord();
+    @WebMethod
+    String getVisibleWord();
 
-    @WebMethod ArrayList<String> getUsedLetters();
+    @WebMethod
+    ArrayList<String> getUsedLetters();
 
-    @WebMethod String getWord ();
+    @WebMethod
+    String getWord();
 
-    @WebMethod int informConnect();
+    @WebMethod
+    int informConnect();
 
-    @WebMethod void informDisconnect(int id);
+    @WebMethod
+    void informDisconnect(int id);
 
 }

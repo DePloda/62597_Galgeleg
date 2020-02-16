@@ -114,8 +114,8 @@ public class RunClient {
     private void startConnection() {
         System.out.print("Connecting client to dist.saluton.dk ... ");
         try {
-            //URL url = new URL("http://localhost:9920/hangman?wsdl"); // Local testing
-            URL url = new URL("http://s185120@dist.saluton.dk:9920/hangman?wsdl"); // dist.saluton.dk testing
+            URL url = new URL("http://localhost:9920/hangman?wsdl"); // Local testing
+            //URL url = new URL("http://s185120@dist.saluton.dk:9920/hangman?wsdl"); // dist.saluton.dk testing
             QName qname = new QName("http://hangman_server/", "ConnectionHandlerService");
             Service service = Service.create(url, qname);
             server = service.getPort(IConnectionHandler.class);
