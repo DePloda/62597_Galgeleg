@@ -12,7 +12,7 @@ public interface IConnectionHandler {
     boolean login(int clientID, String username, String password);
 
     @WebMethod
-    void startGame(int clientID);
+    void startGame(int clientID, int i) throws Exception;
 
     @WebMethod
     boolean isGameOver();
