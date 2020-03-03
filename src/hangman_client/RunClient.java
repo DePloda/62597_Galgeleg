@@ -17,7 +17,7 @@ public class RunClient {
     private Scanner scanner;
     private IConnectionHandler server;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         RunClient runClient = new RunClient();
         runClient.startConnection();
         runClient.shutdownHook();
@@ -58,7 +58,7 @@ public class RunClient {
         }, "Shutdown-thread"));
     }
 
-    private void awaitDecision() {
+    private void awaitDecision() throws Exception {
 
         String input;
         while (true) {
@@ -78,7 +78,21 @@ public class RunClient {
                 break;
             }
             if (input.equals("spil")) {
-                gameLoop();
+                System.out.println();
+                System.out.println("#########################################");
+                System.out.println("#                                       #");
+                System.out.println("#            VÆLG ORDKATALOG            #");
+                System.out.println("#                > DR                   #");
+                System.out.println("#                > LOKAL                #");
+                System.out.println("#                                       #");
+                System.out.println("#########################################");
+                System.out.print("> ");
+                input = scanner.nextLine().toLowerCase();
+                if(input.equals("dr")){
+                    gameLoop(1);
+                }else if(input.equals("lokal")) {
+                    gameLoop(2);
+                }
             }
         }
 
@@ -106,12 +120,14 @@ public class RunClient {
         } while (!success);
     }
 
-    private void gameLoop() {
-        server.startGame(clientID);
+    private void gameLoop(int j ) throws Exception {
+        server.startGame(clientID, j);
 
         while (!server.isGameOver()) {
             System.out.println("ORD DER SKAL GÆTTES: " + server.getVisibleWord());
             System.out.print("BRUGTE BOGSTAVER: ");
+            //i == 1 for DR ord i == 2 for lokale ord
+
             ArrayList<String> letters = server.getUsedLetters();
 
             for (int i = 0; i < letters.size(); i++) {

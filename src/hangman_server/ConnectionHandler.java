@@ -45,8 +45,13 @@ public class ConnectionHandler implements IConnectionHandler {
     }
 
     @Override
-    public void startGame(int clientID) {
-        galgelogik = new Galgelogik();
+    public void startGame(int clientID, int i) throws Exception {
+        if(i == 1){
+            galgelogik = new Galgelogik(1);
+        } else if(i == 2){
+            galgelogik = new Galgelogik(2);
+        }
+
         galgelogik.nulstil();
         System.out.println("Client#" + clientID + " started at game.");
     }

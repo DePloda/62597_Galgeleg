@@ -27,17 +27,24 @@ public class Galgelogik {
     private boolean spilletErVundet;
     private boolean spilletErTabt;
 
-    public Galgelogik() {
-        muligeOrd.add("bil");
-        muligeOrd.add("computer");
-        muligeOrd.add("programmering");
-        muligeOrd.add("motorvej");
-        muligeOrd.add("busrute");
-        muligeOrd.add("gangsti");
-        muligeOrd.add("skovsnegl");
-        muligeOrd.add("solsort");
-        muligeOrd.add("nitten");
-        nulstil();
+    public Galgelogik(int i) throws Exception {
+        if(i == 1){
+            hentOrdFraDr();
+        }
+
+        else if(i == 2){
+            muligeOrd.add("bil");
+            muligeOrd.add("computer");
+            muligeOrd.add("programmering");
+            muligeOrd.add("motorvej");
+            muligeOrd.add("busrute");
+            muligeOrd.add("gangsti");
+            muligeOrd.add("skovsnegl");
+            muligeOrd.add("solsort");
+            muligeOrd.add("nitten");
+            nulstil();
+        }
+
     }
 
 
